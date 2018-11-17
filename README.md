@@ -11,7 +11,7 @@
 
 ## Dependencias:
 
-apt-get install pip
-pip install flask
-pip install behave
+apt-get install pip 
+pip install flask 
+pip install behave 
 
