@@ -5,8 +5,8 @@
 
 ## Integrantes:
 
-- Mariano Cinalli [@MarianoCinalli](https://github.com/MarianoCinalli)
-- Marcos Vrljicak
+- [Mariano Cinalli](https://github.com/MarianoCinalli)
+- [Marcos Vrljicak](https://github.com/MarkoVrljicak)
 - Victor Bravo
 
 ## Dependencias:
