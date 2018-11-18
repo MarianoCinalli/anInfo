@@ -21,6 +21,8 @@ class Task:
         return self.project.getName() == project.getName()
 
     def addHours(self, hours):
+        if self.status == "done":
+            raise Exception("Can't increase the time elapsed for a task with status 'done'")
         self.timeElapsed += hours
 
     def getAsDict(self):

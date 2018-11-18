@@ -30,7 +30,10 @@ def task(taskId):
     responce = {} 
     if request.method == 'POST':
         hours = int(request.values.get('hours'))
-        tasksDao.addHours(taskId, hours)
+        try:
+            tasksDao.addHours(taskId, hours)
+        except Exception,e:
+            abort(500)
     else:
         task = tasksDao.getTask(taskId)
         if task:
