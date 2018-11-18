@@ -2,6 +2,8 @@ from behave import given, when, then
 from pprint import pprint
 import json
 
+user = "jorge.bolco"
+
 # Scenario: Add hours for task
 
 @given(u'a task')
@@ -67,4 +69,24 @@ def step_impl(context):
     response = context.client.get("/task/" + str(context.response.json_task_before["id"]))
     task = json.loads(response.data)
     assert task["status"] == "started"
+
+# Scenario: Add hours to task above max time for user in project
+
+@given(u'a task for a {user}')
+def step_impl(context, user):
+    context.response = context.client.get("/task/2")
+    context.response.json_task_before = json.loads(context.response.data)
+    assert context.response.json_task_before["assignedTo"] == user
+    assert context.response.json_task_before["timeElapsed"] == 0
+
+@when(u'trying to add hours above the maximum time for that user in the project')
+def step_impl(context):
+    response = context.client.post("/task/" + str(context.response.json_task_before["id"]), data=dict(hours=200))
+    assert response.status_code == 500
+
+@then(u'the time for jorge.bolcos task should remain the same')
+def step_impl(context):
+    response = context.client.get("/task/" + str(context.response.json_task_before["id"]))
+    task = json.loads(response.data)
+    assert task["timeElapsed"] == context.response.json_task_before["timeElapsed"]
 

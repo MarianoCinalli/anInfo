@@ -16,3 +16,8 @@ Feature: Time tracking
         Then one hour should be added
         And status should change to started
 
+   Scenario: Add hours to task above max time for user in project
+        Given a task for a jorge.bolco
+        When trying to add hours above the maximum time for that user in the project
+        Then the time for jorge.bolcos task should remain the same
+
