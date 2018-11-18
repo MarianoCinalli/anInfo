@@ -14,7 +14,7 @@ def step_impl(context):
 @when(u'one hour is added to the task')
 def step_impl(context):
     response = context.client.post("/task/" + str(context.response.json_task_before["id"]), data=dict(hours=1))
-    assert response.status_code == 200 
+    assert response.status_code == 200
 
 @then(u'the count should increase by one')
 def step_impl(context):
@@ -31,8 +31,8 @@ def step_impl(context):
     assert context.response.json_task_before["status"] == "done"
     assert context.response.json_task_before["timeElapsed"] == 5
 
-@when(u'trying to add an hour to a finished task')
-def step_impl(context):
+@when(u'trying to add one hour to a finished task')
+def step_impl(context, hour):
     response = context.client.post("/task/" + str(context.response.json_task_before["id"]), data=dict(hours=1))
     assert response.status_code == 500
 
@@ -41,3 +41,30 @@ def step_impl(context):
     response = context.client.get("/task/" + str(context.response.json_task_before["id"]))
     task = json.loads(response.data)
     assert task["timeElapsed"] == context.response.json_task_before["timeElapsed"] 
+
+# Scenario: Add hours to pending task
+
+@given(u'a task with pending status')
+def step_impl(context):
+    context.response = context.client.get("/task/4")
+    context.response.json_task_before = json.loads(context.response.data)
+    assert context.response.json_task_before["status"] == "pending"
+    assert context.response.json_task_before["timeElapsed"] == 0
+
+@when(u'adding one hour')
+def step_impl(context):
+    response = context.client.post("/task/" + str(context.response.json_task_before["id"]), data=dict(hours=1))
+    assert response.status_code == 200
+
+@then(u'one hour should be added')
+def step_impl(context):
+    response = context.client.get("/task/" + str(context.response.json_task_before["id"]))
+    task = json.loads(response.data)
+    assert task["timeElapsed"] == 1
+
+@then(u'status should change to started')
+def step_impl(context):
+    response = context.client.get("/task/" + str(context.response.json_task_before["id"]))
+    task = json.loads(response.data)
+    assert task["status"] == "started"
+
