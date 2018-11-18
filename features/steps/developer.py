@@ -2,6 +2,7 @@ from behave import given, then
 import json
 
 user="jorge.bolco"
+project="crm"
 
 @given(u'a user requests all tasks')
 def step_impl(context):
@@ -34,7 +35,7 @@ def step_impl(context):
 
 @given(u'{user} requests his tasks for the {project} project')
 def step_impl(context, user, project):
-    context.response = context.client.get("/tasks/" + project + "/" + user)
+    context.response = context.client.get("/tasks/" + user + "/" + project)
     context.response.json_data = json.loads(context.response.data)
     assert len(context.response.json_data) == 3
 
