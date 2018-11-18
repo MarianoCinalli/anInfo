@@ -23,6 +23,8 @@ class Task:
     def addHours(self, hours):
         if self.status == "done":
             raise Exception("Can't increase the time elapsed for a task with status 'done'")
+        if self.status == "pending":
+            self.status = "started"
         self.timeElapsed += hours
 
     def getAsDict(self):

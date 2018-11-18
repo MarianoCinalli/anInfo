@@ -32,7 +32,7 @@ def step_impl(context):
     assert context.response.json_task_before["timeElapsed"] == 5
 
 @when(u'trying to add one hour to a finished task')
-def step_impl(context, hour):
+def step_impl(context):
     response = context.client.post("/task/" + str(context.response.json_task_before["id"]), data=dict(hours=1))
     assert response.status_code == 500
 
