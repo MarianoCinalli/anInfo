@@ -5,3 +5,14 @@ __pycache__/
 
 # Swap files
 *.swp
+
+*.pyc
+
+npm-debug.log
+
+*.eot
+*.svg
+*.ttf
+frontend/static/*.js
+frontend/static/*.js.map
+frontend/node_modules

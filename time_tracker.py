@@ -1,4 +1,4 @@
-from flask import Flask, json, request, abort
+from flask import Flask, json, request, abort, render_template
 from task import Task
 from tasks import Tasks
 from user import User
@@ -7,9 +7,12 @@ from project import Project
 app = Flask(__name__)
 tasksDao = Tasks()
 
+app.template_folder = "./frontend/templates/"
+app.static_folder = "./frontend/static/"
+
 @app.route("/")
-def hello():
-    return "Hello World!"
+def time_tracker():
+    return render_template('time_tracker.html')
 
 @app.route("/tasks", defaults={'projectName': None, 'userName': None})
 @app.route("/tasks/<string:userName>", defaults={'projectName': None})
@@ -27,7 +30,7 @@ def return_tasks(userName, projectName):
 
 @app.route("/task/<int:taskId>", methods=['GET', 'POST'])
 def task(taskId):
-    responce = {} 
+    responce = {}
     if request.method == 'POST':
         hours = int(request.values.get('hours'))
         try:
@@ -41,5 +44,4 @@ def task(taskId):
     return json.jsonify(responce)
 
 if __name__ == "__main__":
-    app.run(host='10.116.170.191', port=5353)
-
+    app.run(host='localhost', port=5353)
