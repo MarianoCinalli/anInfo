@@ -30,9 +30,10 @@ def return_tasks(userName, projectName):
 
 @app.route("/task/<int:taskId>", methods=['GET', 'POST'])
 def task(taskId):
-    responce = {}
+    response = {}
     if request.method == 'POST':
-        hours = int(request.values.get('hours'))
+        hours = json.loads(request.data)["hours"]
+        hours = int(hours)
         try:
              tasksDao.addHours(taskId, hours)
         except Exception,e:
@@ -40,8 +41,8 @@ def task(taskId):
     else:
         task = tasksDao.getTask(taskId)
         if task:
-            responce = task.getAsDict()
-    return json.jsonify(responce)
+            response = task.getAsDict()
+    return json.jsonify(response)
 
 if __name__ == "__main__":
     app.run(host='localhost', port=5353)

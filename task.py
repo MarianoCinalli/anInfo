@@ -40,4 +40,3 @@ class Task:
             "assignedTo": self.assignedTo.getName(),
             "project": self.project.getName()
         }
-
