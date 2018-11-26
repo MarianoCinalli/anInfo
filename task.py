@@ -25,7 +25,6 @@ class Task:
             raise Exception("Can't add negative hours")
         if self.status == "done":
             raise Exception("Can't increase the time elapsed for a task with status 'done'")
-        print "adding: " + str(hours) + " max: " + str(self.assignedTo.getMaxHours())
         if self.assignedTo.getMaxHours() < hours:
             raise Exception("Can't assign more hours that the user is allowed.")
         if self.status == "pending":
