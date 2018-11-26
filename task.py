@@ -21,6 +21,8 @@ class Task:
         return self.project.getName() == project.getName()
 
     def addHours(self, hours):
+        if hours < 0:
+            raise Exception("Can't add negative hours")
         if self.status == "done":
             raise Exception("Can't increase the time elapsed for a task with status 'done'")
         print "adding: " + str(hours) + " max: " + str(self.assignedTo.getMaxHours())
