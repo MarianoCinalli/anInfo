@@ -21,3 +21,7 @@ Feature: Time tracking
         When trying to add hours above the maximum time for that user in the project
         Then the time for jorge.bolcos task should remain the same
 
+   Scenario: Add negative hours
+        Given a task with pending status for jorge.bolco
+        When trying to add negative hours
+        Then the time for the task should remain the same

@@ -90,3 +90,24 @@ def step_impl(context):
     task = json.loads(response.data)
     assert task["timeElapsed"] == context.response.json_task_before["timeElapsed"]
 
+# Scenario: Add negative hours
+
+@given(u'a task with pending status for {user}')
+def step_impl(context, user):
+    context.response = context.client.get("/task/2")
+    context.response.json_task_before = json.loads(context.response.data)
+    assert context.response.json_task_before["assignedTo"] == user
+    assert context.response.json_task_before["timeElapsed"] == 0
+    assert context.response.json_task_before["status"] == "pending"
+
+@when(u'trying to add negative hours')
+def step_impl(context):
+    response = context.client.post("/task/" + str(context.response.json_task_before["id"]), data=dict(hours=-1))
+    assert response.status_code == 500
+
+@then(u'the time for the task should remain the same')
+def step_impl(context):
+    response = context.client.get("/task/" + str(context.response.json_task_before["id"]))
+    task = json.loads(response.data)
+    assert task["timeElapsed"] == context.response.json_task_before["timeElapsed"]
+
