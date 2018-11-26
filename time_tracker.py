@@ -32,7 +32,9 @@ def return_tasks(userName, projectName):
 def task(taskId):
     response = {}
     if request.method == 'POST':
-        hours = json.loads(request.data)["hours"]
+        hours = request.values.get('hours')
+        if not hours:
+            hours = json.loads(request.data)["hours"]
         hours = int(hours)
         try:
              tasksDao.addHours(taskId, hours)
