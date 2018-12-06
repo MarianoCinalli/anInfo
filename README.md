@@ -10,11 +10,12 @@
 - Victor Bravo
 
 ## Dependencias e instalacion (asumiendo Ubuntu):
-
+```
 apt-get install python-pip npm
 pip install -r requirements.txt
-
+```
 Parado en directorio frontend:
-
+```
 npm install
 npm run build (si falla intentar con una version mas reciente de npm)
+```
