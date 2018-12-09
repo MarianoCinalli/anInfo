@@ -83,5 +83,7 @@ class Tasks:
             if task.id == taskId:
                 task_finished = True
                 task.finish()
-        return {"finished": taskId} if task_finished else {"Error": "TaskNotFoundError: The task could not be found"}
+        if not task_finished:
+            raise Exception("Can't find task")
+        return {"finished": taskId}
 
