@@ -31,6 +31,9 @@ class Task:
             self.status = "started"
         self.timeElapsed += hours
 
+    def finish(self):
+        self.status = "done"
+
     def getAsDict(self):
         return {
             "id": self.id,

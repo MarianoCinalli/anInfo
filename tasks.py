@@ -77,3 +77,11 @@ class Tasks:
             if task.id == taskId:
                 task.addHours(amount)
 
+    def finish(self, taskId):
+        task_finished = False
+        for task in self.tasks:
+            if task.id == taskId:
+                task_finished = True
+                task.finish()
+        return {"finished": taskId} if task_finished else {"Error": "TaskNotFoundError: The task could not be found"}
+

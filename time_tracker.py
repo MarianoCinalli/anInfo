@@ -46,5 +46,19 @@ def task(taskId):
             response = task.getAsDict()
     return json.jsonify(response)
 
+@app.route("/task/finish", methods=['POST'])
+def finishTask():
+    response = {}
+    taskId = request.values.get('taskId')
+    if not taskId:
+        taskId = json.loads(request.data)["taskId"]
+    taskId = int(taskId)
+    try:
+        responce = tasksDao.finish(taskId)
+    except Exception,e:
+        abort(500)
+    return json.jsonify(responce)
+
 if __name__ == "__main__":
     app.run(host='localhost', port=5353)
+
