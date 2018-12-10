@@ -88,9 +88,15 @@ export default class TimeTracker extends RootComponent {
         this.ajaxCall(endpoint, body, this.taskOnSuccess)
     }
 
+    handleDoneClick = (event) => {
+        var endpoint = '/task/finish'
+        var body = {taskId: this.state.selectedTask}
+        this.ajaxCall(endpoint, body, this.taskOnSuccess)
+    }
+
+
     addHoursSelector = () => {
         var options = this.state.tasksAsOptions
-        console.log(options)
         return(
             <Form>
                 <Form.Group widths='equal'>
@@ -106,6 +112,9 @@ export default class TimeTracker extends RootComponent {
                 </Form.Field>
                 <Button size='small' onClick={this.handleClick}>
                     Agregar
+                </Button>
+                <Button size='small' onClick={this.handleDoneClick}>
+                    Terminado
                 </Button>
                 </Form.Group>
             </Form>
